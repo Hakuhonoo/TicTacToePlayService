@@ -6,7 +6,7 @@ const routes = require('./app/routes');
 const gameHandler = require('./app/gameHandler');
 const config = require('./config/config');
 const MongoClient = require('mongodb').MongoClient;
-const io = require('socket.io')(4001);
+const io = require('socket.io')(config.wsPort);
 
 io.set('transports', ['websocket']);
 
@@ -35,6 +35,6 @@ MongoClient.connect(config.dbUrl, {useUnifiedTopology: true}, (error, client) =>
     });
 
     app.listen(config.serverPort, () => {
-        console.log('Listening on ' + config.serverPort);
+        console.log('Listening on ' + config.serverPort + ' and ' + config.wsPort);
     });
 });
