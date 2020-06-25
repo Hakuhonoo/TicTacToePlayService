@@ -1,6 +1,6 @@
 
 module.exports = {
-    clientUrl: 'http://localhost:3000',
+    clientUrl: 'http://localhost:4000',
     serverPort: 4000,
-    dbUrl: 'mongodb+srv://andre:tkzwsF91csYYdJx8@cluster0-tekqj.mongodb.net?retryWrites=true&w=majority'
+    dbUrl: 'mongodb+srv://<YOUR_LINK>'
 };
