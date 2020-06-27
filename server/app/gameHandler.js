@@ -188,7 +188,7 @@ function onMessage(message, socket) {
     gameData.game.forEach(p => p.socket.connected && p.side !== gameData.playerGame.side && p.socket.emit('message', message));
 }
 
-function onLeave(db, dbClient, socket) {
+function onLeave(db, socket) {
     const gameData = getGameData(socket);
     if (!gameData)
         return;
@@ -230,10 +230,6 @@ function getGameData(socket) {
 
 module.exports = (io, db, dbClient) => {
 
-    io.on('reconnect_attempt', () => {
-        io.io.opts.transports = ['polling', 'websocket'];
-    });
-
     io.on('connection', socket => {
         socket.on('auth', req => {
             onAuth(db, req, socket);
@@ -246,12 +242,12 @@ module.exports = (io, db, dbClient) => {
             });
         });
 
-        socket.on('message', message => {
-            onMessage(message, socket);
+        socket.on('leave', () => {
+            onLeave(db, socket);
         });
 
-        socket.on('leave', () => {
-            onLeave(db, dbClient, socket);
+        socket.on('message', message => {
+            onMessage(message, socket);
         });
     });
 }
